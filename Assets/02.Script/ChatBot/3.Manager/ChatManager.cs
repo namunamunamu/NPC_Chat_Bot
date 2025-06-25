@@ -9,7 +9,7 @@ public class ChatManager : MonoBehaviour
     private List<Chat> _chatList;
     public List<ChatDTO> ChatList => _chatList.ConvertAll(x => new ChatDTO(x));
 
-    public event Action OnReceiveMessage;
+    public event Action<ChatDTO> OnReceiveMessage;
     public event Action<ChatDTO> OnChatListChanged;
 
     private ChatRepository _repo;
@@ -34,12 +34,14 @@ public class ChatManager : MonoBehaviour
         _repo = new ChatRepository();
     }
 
-    public void SendMessage(ChatDTO userChat)
+    public async void SendMessage(ChatDTO userChat)
     {
-        ChatDTO responseMessage = _repo.OnSendMessage(userChat).Result;
-        // OnReceiveMessage?.Invoke();
+        Debug.Log("SendMessage");
+        ChatDTO responseMessage = await _repo.OnSendMessage(userChat);
+        Debug.Log("Done");
+        OnReceiveMessage?.Invoke(responseMessage);
 
         ChatList.Add(responseMessage);
-        OnChatListChanged?.Invoke(userChat);
+        OnChatListChanged?.Invoke(responseMessage);
     }
 }

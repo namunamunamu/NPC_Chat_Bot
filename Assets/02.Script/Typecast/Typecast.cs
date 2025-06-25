@@ -7,9 +7,23 @@ using UnityEngine.Networking;
 
 public class Typecast : MonoBehaviour
 {
+    public AudioSource AudioSource;
     private const string VOICE_ID = "622964d6255364be41659078";
-    
-    public Task<AudioClip> StartSpeechAsync(string text)
+
+    private void Start()
+    {
+        ChatManager.Instance.OnReceiveMessage += PlayTTS;
+    }
+
+    public async void PlayTTS(ChatDTO chat)
+    {
+        AudioClip tts = await StartSpeechAsync(chat.Content);
+        AudioSource.PlayOneShot(tts);
+    }
+
+
+
+    private Task<AudioClip> StartSpeechAsync(string text)
     {
         var tcs = new TaskCompletionSource<AudioClip>();
         StartCoroutine(RequestSpeakCoroutine(text, tcs));
@@ -36,8 +50,6 @@ public class Typecast : MonoBehaviour
             postReq.downloadHandler = new DownloadHandlerBuffer();
             postReq.SetRequestHeader("Content-Type", "application/json");
             postReq.SetRequestHeader("Authorization", APIKeys.TYPECAST_API_KEY);
-
-            Debug.Log(postJson);
             
             yield return postReq.SendWebRequest();
 

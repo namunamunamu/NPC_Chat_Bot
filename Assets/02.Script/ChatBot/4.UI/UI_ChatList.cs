@@ -22,26 +22,32 @@ public class UI_ChatList : MonoBehaviour
     private void Init()
     {
         ChatManager.Instance.OnChatListChanged += UpdateChat;
+        _chatList = new List<UI_Chat>();
     }
 
     private void UpdateChat(ChatDTO chatData)
     {
-        UI_Chat newChat = null;
         if (chatData.Owner == "user")
         {
-            newChat = Instantiate(UserChatPrefab, transform);
+            UI_Chat newChat = Instantiate(UserChatPrefab, transform);
+            newChat.InitChat(chatData);
+            _chatList.Add(newChat);
         }
         else
         {
-            newChat = Instantiate(NPCChatPrefab, transform);
+            UI_Chat newChat = Instantiate(NPCChatPrefab, transform);
+            newChat.InitChat(chatData);
+            _chatList.Add(newChat);
         }
-        newChat.InitChat(chatData);
-        _chatList.Add(newChat);
     }
 
     public void OnSendButton()
     {
         ChatDTO userChat = new ChatDTO("user", PromptField.text, "");
+
+        PromptField.text = "";
+        UpdateChat(userChat);
+
         ChatManager.Instance.SendMessage(userChat);
     }
 }

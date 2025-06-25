@@ -30,13 +30,23 @@ public class ImageGenerationRepo : MonoBehaviour
         }
     }
 
-
-    public void SendPromptToComfyUI(string promptText)
+    private void Start()
     {
-        StartCoroutine(SendPromptRequest(promptText));
+        Init();
     }
 
-    public void GetImagefromComfyUI(string id)
+    private void Init()
+    {
+        ChatManager.Instance.OnReceiveMessage += SendPromptToComfyUI;
+    }
+
+
+    public void SendPromptToComfyUI(ChatDTO chatDTO)
+    {
+        StartCoroutine(SendPromptRequest(chatDTO.Info));
+    }
+
+    private void GetImagefromComfyUI(string id)
     {
         StartCoroutine(GetImage(id));
     }

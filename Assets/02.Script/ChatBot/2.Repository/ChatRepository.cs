@@ -3,11 +3,12 @@ using System.Threading.Tasks;
 using OpenAI;
 using OpenAI.Chat;
 using OpenAI.Models;
+using UnityEngine;
 
 public class ChatRepository
 {
     private OpenAIClient _api;
-    private List<Message> _memories;
+    private List<Message> _memories = new List<Message>();
 
     private string _npcName = "Rena";
 
@@ -35,12 +36,13 @@ public class ChatRepository
         systemMessage += "감정은 'Emotion', ";
         systemMessage += "현재 답변에 기반한 ComfyUI 이미지생성 프롬프트는 'StoyImageDescription'";
 
-        _memories = new List<Message>();
         _memories.Add(new Message(Role.User, systemMessage));
     }
 
     public async Task<ChatDTO> OnSendMessage(ChatDTO userChat)
     {
+         Debug.Log("OnSendMessage");
+
         Message promptMessage = new Message(Role.User, userChat.Content);
         _memories.Add(promptMessage);
 
@@ -52,6 +54,6 @@ public class ChatRepository
         Message resultMessage = new Message(Role.Assistant, choice.Message);
         _memories.Add(resultMessage);
 
-        return new ChatDTO(_npcName, npcResponse.ReplyMessage, npcResponse.Emotion);
+        return new ChatDTO(_npcName, npcResponse.ReplyMessage, npcResponse.StoyImageDescription);
     }
 }
