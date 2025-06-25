@@ -66,6 +66,7 @@ public class ImageGenerationRepo : MonoBehaviour
 
         if (!string.IsNullOrEmpty(promptText) && originalJson.Contains("PromptTextPlaceholder"))
         {
+            Debug.Log(promptText);
             modifiedJson = originalJson.Replace("PromptTextPlaceholder", _prefix + promptText);
         }
         else
