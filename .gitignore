@@ -2,6 +2,11 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
+
+.vscode
+/Assets/02.Script/APIKeys.cs
+/Assets/02.Script/APIKeys.cs.meta
+
 .utmp/
 /[Ll]ibrary/
 /[Tt]emp/
