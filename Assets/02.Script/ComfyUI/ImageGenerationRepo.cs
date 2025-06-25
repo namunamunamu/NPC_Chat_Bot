@@ -43,7 +43,7 @@ public class ImageGenerationRepo : MonoBehaviour
 
     public void SendPromptToComfyUI(ChatDTO chatDTO)
     {
-        StartCoroutine(SendPromptRequest(chatDTO.Info));
+        StartCoroutine(SendPromptRequest(chatDTO.ComfyUIPrompt));
     }
 
     private void GetImagefromComfyUI(string id)

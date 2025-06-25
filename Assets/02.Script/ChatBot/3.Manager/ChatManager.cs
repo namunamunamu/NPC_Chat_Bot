@@ -38,7 +38,6 @@ public class ChatManager : MonoBehaviour
     {
         Debug.Log("SendMessage");
         ChatDTO responseMessage = await _repo.OnSendMessage(userChat);
-        Debug.Log("Done");
         OnReceiveMessage?.Invoke(responseMessage);
 
         ChatList.Add(responseMessage);

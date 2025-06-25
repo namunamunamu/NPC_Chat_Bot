@@ -5,27 +5,42 @@ public class Chat
 {
     public readonly string Owner;
     public readonly string Content;
-    public readonly string Info;
+    public readonly string Emotion;
+    public readonly string Situration;
+    public readonly string ComfyUIPrompt;
 
-    public Chat(string owner, string content, string info)
+    public Chat(string owner, string content, string emotion = "", string situration="", string prompt = "")
     {
         if (string.IsNullOrEmpty(owner))
         {
             throw new Exception("Owner는 비어있을 수 없습니다.");
         }
 
-        if (string.IsNullOrEmpty(content))
+        if (owner != "user" && string.IsNullOrEmpty(content))
         {
             throw new Exception("Content는 비어있을 수 없습니다.");
         }
 
-        if (string.IsNullOrEmpty(info))
+        if (owner != "user" && string.IsNullOrEmpty(emotion))
+        {
+            throw new Exception("Content는 비어있을 수 없습니다.");
+        }
+
+        if (owner != "user" && string.IsNullOrEmpty(situration))
+        {
+            throw new Exception("Content는 비어있을 수 없습니다.");
+        }
+
+
+        if (owner != "user" && string.IsNullOrEmpty(prompt))
         {
             throw new Exception("Info는 비어있을 수 없습니다.");
         }
 
         Owner = owner;
         Content = content;
-        Info = info;
+        Emotion = emotion;
+        Situration = situration;
+        ComfyUIPrompt = prompt;
     }
 }

@@ -27,14 +27,15 @@ public class ChatRepository
         // T => Target      : 답변의 타겟 대상자를 알려줘라
         // F => Forma       : 답변 형태를 정해줘라
 
-        string systemMessage = "역할: 너는 게임 NPC다. 너는 게임 속 고양이 귀를 달고 있는 일본 애니메이션 캐릭터처럼 생긴 NPC이다.";
+        string systemMessage = "역할: 너는 게임 NPC '레나'다. 너는 게임 속 고양이 귀를 달고 있는 일본 애니메이션 캐릭터처럼 생긴 NPC이다.";
         systemMessage += "목적: 실제 사람처럼 대화하는 게임 NPC 모드";
         systemMessage += "표현: 말 끝마다 '냥-'을 붙인다. 항상 100글자 이내로 답변한다.";
         systemMessage += "[json 규칙]";
+        systemMessage += "모든 json 규칙에 대한 출력은 한글로 출력한다.";
         systemMessage += "답변은 'ReplyMessage', ";
-        systemMessage += "외모는 'Appearance', ";
         systemMessage += "감정은 'Emotion', ";
-        systemMessage += "현재 답변에 기반한 ComfyUI 이미지생성 프롬프트는 'StoyImageDescription'";
+        systemMessage += "현재 상황은 'Situration', ";
+        systemMessage += "현재 상황을 이미지로 생성하기위한 ComfyUI 프롬프트는 'StoyImageDescription'";
 
         _memories.Add(new Message(Role.User, systemMessage));
     }
@@ -54,6 +55,6 @@ public class ChatRepository
         Message resultMessage = new Message(Role.Assistant, choice.Message);
         _memories.Add(resultMessage);
 
-        return new ChatDTO(_npcName, npcResponse.ReplyMessage, npcResponse.StoyImageDescription);
+        return new ChatDTO(_npcName, npcResponse.ReplyMessage, npcResponse.Emotion, npcResponse.Situration, npcResponse.StoyImageDescription);
     }
 }
