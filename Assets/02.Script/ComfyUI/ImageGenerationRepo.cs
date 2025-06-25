@@ -15,7 +15,7 @@ public class ImageGenerationRepo : MonoBehaviour
     public TextAsset comfyUIWorkflowJson;
     public RawImage RawImage;
 
-    private string _prefix = "(masterpiece, best quality, ultra-detailed, 8k, highly detailed, sharp focus, cinematic lighting), 1girl, full body";
+    private string _prefix = "(masterpiece, best quality, ultra-detailed, 8k, highly detailed, sharp focus, cinematic lighting), 1girl, ";
     private string _filename;
 
     private void Awake()
